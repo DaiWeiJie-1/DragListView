@@ -28,16 +28,7 @@ public class DragListView extends ListView{
 
 	private static final String VIBRATOR_PERMISSION = "android.permission.VIBRATE";
 	
-	private static final int DRAG_STATE_IDEL = 0;
-	
-	/**
-	 * 计时准备中
-	 */
-	private static final int DRAG_STATE_PREPARING = 1; 
-	
-	private static final int DRAG_STATE_STARTING = 2;
-	
-	private static final int MSG_DRAG_START = 1;
+	private static final int MSG_DRAG_START = 0x00000001;
 	
 	private Point mDragViewPointInScreen;
 	
@@ -55,7 +46,7 @@ public class DragListView extends ListView{
 	private int mDragPosition;
 	
 	private ImageView mDragImageView;
-	private int mDragState = DRAG_STATE_IDEL;
+	private DragState mDragState = DragState.IDEL;
 	
 	private boolean mIsVibrator = false;
 	
@@ -91,14 +82,14 @@ public class DragListView extends ListView{
 		switch (action) {
 		case MotionEvent.ACTION_DOWN:
 			Log.d(TAG, "onIntercept: down" + "; x = " + ev.getX() + "; y = " + ev.getY());
-			if(mDragState == DRAG_STATE_IDEL){
+			if(mDragState == DragState.IDEL){
 				Message msg = new Message();
 				msg.what = MSG_DRAG_START;
 				
 				mDragHandler.sendMessageDelayed(msg, 2000);
 				mDragPreparingPointInScreen = new Point((int)ev.getRawX(), (int)ev.getRawY());
 				mDragPreparingPointInListView = new Point((int)ev.getX(), (int)ev.getY());
-				mDragState = DRAG_STATE_PREPARING;
+				mDragState = DragState.PREPARING;
 				return false;
 			}
 			
@@ -125,7 +116,7 @@ public class DragListView extends ListView{
 				if(hasVibratorPermission && mIsVibrator){
 					vibrator();
 				}
-				mDragState = DRAG_STATE_STARTING;
+				mDragState = DragState.DRAGING;
 				break;
 
 			default:
@@ -138,14 +129,14 @@ public class DragListView extends ListView{
 	public boolean onTouchEvent(MotionEvent ev) {
 		switch (ev.getAction()) {
 			case MotionEvent.ACTION_MOVE:
-				if(mDragState == DRAG_STATE_PREPARING){
+				if(mDragState == DragState.PREPARING){
 					if((Math.abs((int)ev.getRawX() - mDragPreparingPointInScreen.x) > 3) || (Math.abs((int)ev.getRawY() - mDragPreparingPointInScreen.y) > 3)){
 						//移动超过一定距离
 						mDragHandler.removeMessages(MSG_DRAG_START);
-						mDragState = DRAG_STATE_IDEL;
+						mDragState = DragState.IDEL;
 						return true;
 					}
-				}else if(mDragState == DRAG_STATE_STARTING){
+				}else if(mDragState == DragState.DRAGING){
 					dragImageView(mDragImageView, ev);
 					changeDragItemAndCurrentItem((int)ev.getX(), (int)ev.getY());
 					scrollyListView((int)ev.getY());
@@ -156,13 +147,13 @@ public class DragListView extends ListView{
 				
 			case MotionEvent.ACTION_UP:
 			case MotionEvent.ACTION_CANCEL:
-				if(mDragState == DRAG_STATE_PREPARING){
+				if(mDragState == DragState.PREPARING){
 					mDragHandler.removeMessages(MSG_DRAG_START);
-					mDragState = DRAG_STATE_IDEL;
+					mDragState = DragState.IDEL;
 					
-				}else if(mDragState == DRAG_STATE_STARTING){
+				}else if(mDragState == DragState.DRAGING){
 					cancelDrag(mDragImageView);
-					mDragState = DRAG_STATE_IDEL;
+					mDragState = DragState.IDEL;
 					return true;
 				}
 				
@@ -314,7 +305,7 @@ public class DragListView extends ListView{
 	 * @param y
 	 */
 	private void changeDragItemAndCurrentItem(int x, int y){
-		if(mDragState == DRAG_STATE_STARTING && mDragImageView != null){
+		if(mDragState == DragState.DRAGING && mDragImageView != null){
 			DragBaseAdapter adapter = (DragBaseAdapter) getAdapter();
 			int curPosition = pointToPosition(x, y);
 			
