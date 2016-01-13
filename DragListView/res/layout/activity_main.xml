@@ -1,0 +1,15 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:dragListView="http://schemas.android.com/apk/res/com.example.draglistview"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity" >
+
+    <com.dwj.draglistview.DragListView 
+        android:id="@+id/drag_list_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        dragListView:is_vibrate="true"
+        />
+
+</RelativeLayout>
