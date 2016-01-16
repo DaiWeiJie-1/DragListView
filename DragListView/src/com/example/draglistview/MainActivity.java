@@ -46,27 +46,27 @@ public class MainActivity extends Activity implements OnItemClickListener,OnItem
     }
     
     private void initDatas(){
-    	mDatas.add("第1行");
-    	mDatas.add("第2行");
-    	mDatas.add("第3行");
-    	mDatas.add("第4行");
-    	mDatas.add("第5行");
-    	mDatas.add("第6行");
-    	mDatas.add("第7行");
-    	mDatas.add("第8行");
-    	mDatas.add("第9行");
-    	mDatas.add("第10行");
-    	mDatas.add("第11行");
-    	mDatas.add("第13行");
-    	mDatas.add("第14行");
-    	mDatas.add("第15行");
-    	mDatas.add("第16行");
-    	mDatas.add("第17行");
-    	mDatas.add("第18行");
-    	mDatas.add("第19行");
-    	mDatas.add("第20行");
-    	mDatas.add("第21行");
-    	mDatas.add("第22行");
+    	mDatas.add("No.1");
+    	mDatas.add("No.2");
+    	mDatas.add("No.3");
+    	mDatas.add("No.4");
+    	mDatas.add("No.5");
+    	mDatas.add("No.6");
+    	mDatas.add("No.7");
+    	mDatas.add("No.8");
+    	mDatas.add("No.9");
+    	mDatas.add("No.10");
+    	mDatas.add("No.11");
+    	mDatas.add("No.12");
+    	mDatas.add("No.13");
+    	mDatas.add("No.15");
+    	mDatas.add("No.16");
+    	mDatas.add("No.17");
+    	mDatas.add("No.18");
+    	mDatas.add("No.19");
+    	mDatas.add("No.20");
+    	mDatas.add("No.21");
+    	mDatas.add("No.22");
     	
     }
     

@@ -138,7 +138,7 @@ public class DragListView extends ListView{
 					}
 				}else if(mDragState == DragState.DRAGING){
 					dragImageView(mDragImageView, ev);
-					changeDragItemAndCurrentItem((int)ev.getX(), (int)ev.getY());
+					exChangeDragItemAndCurrentItem((int)ev.getX(), (int)ev.getY());
 					scrollyListView((int)ev.getY());
 					return true;
 				}
@@ -304,7 +304,7 @@ public class DragListView extends ListView{
 	 * @param x
 	 * @param y
 	 */
-	private void changeDragItemAndCurrentItem(int x, int y){
+	private void exChangeDragItemAndCurrentItem(int x, int y){
 		if(mDragState == DragState.DRAGING && mDragImageView != null){
 			DragBaseAdapter adapter = (DragBaseAdapter) getAdapter();
 			int curPosition = pointToPosition(x, y);
